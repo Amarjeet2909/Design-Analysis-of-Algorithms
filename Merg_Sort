@@ -1,0 +1,62 @@
+#include <Stdio.h>
+#define MAX 15
+
+void partition(int arr[],int lb,int ub);
+void merge_Sort(int arr[],int lb,int mid,int ub);
+
+int main()
+{
+    int arr[MAX],n,i;
+    printf("Input the number of elements:- ");
+    scanf("%d",&n);
+
+    printf("Insert the %d elements:\n",n);
+    for(i=0; i<n; i++)
+    {
+        scanf("%d",&arr[i]);
+    }
+
+    partition(arr,0,n-1);
+    
+    printf("After sorting with Merge Sort:\n{");
+    for(i=0;i<n;i++)
+    {
+        printf("%d,",arr[i]);
+    }
+    printf("\b}\n");
+    return 0;
+}
+
+void partition(int arr[],int lb,int ub)
+{
+    if(lb<ub)
+    {
+        int mid = (lb+ub)/2;
+        partition(arr,lb,mid);
+        partition(arr,mid+1,ub);
+        merge_Sort(arr,lb,mid,ub);
+    }
+}
+
+void merge_Sort(int arr[],int lb,int mid,int ub)
+{
+    int temp[MAX],i=lb,j=mid+1,k=lb;
+    while(i<=mid && j<=ub)
+    {
+        temp[k++] = (arr[i]<arr[j])?(arr[i++]):(arr[j++]);
+    }
+
+    while(i<=mid)
+    {
+        temp[k++] = arr[i++];
+    }
+    while(j<=ub)
+    {
+        temp[k++] = arr[j++];
+    }
+
+    for(k=lb;k<=ub;k++)
+    {
+        arr[k] = temp[k];
+    }
+}
